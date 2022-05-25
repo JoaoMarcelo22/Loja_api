@@ -15,7 +15,6 @@ namespace LojaApi.Controllers
         {
             produto.Id = id++;
             produtos.Add(produto);
-            Console.WriteLine(produto.Nome,produto.Categoria,produto.Preco);
             return CreatedAtAction(nameof(RecuperarProdutosPorID), new{ Id = produto.Id},produto);
         }
 
@@ -32,6 +31,30 @@ namespace LojaApi.Controllers
             if(produto != null)
             {
                 return Ok(produto);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletarProdutosPorId(double id)
+        {
+            Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
+            if(produto != null)
+            {
+                 produtos.Remove(produto);
+                 return Ok();
+            }
+            return NotFound();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult AlterarProdutosPorId([FromBody]Produto produto,double id)
+        {
+            Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
+            if(produto != null)
+            {
+                 produtos.Insert(Convert.ToInt32(id), new Produto());
+                 return Ok();
             }
             return NotFound();
         }
