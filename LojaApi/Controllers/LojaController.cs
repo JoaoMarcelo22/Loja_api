@@ -21,6 +21,7 @@ namespace LojaApi.Controllers
         [HttpGet]
         public IActionResult RecuperarProduto()
         {
+            produtos = produtos.OrderBy(x => x.Id).ToList();
             return Ok(produtos);
         }
 
@@ -30,7 +31,6 @@ namespace LojaApi.Controllers
             Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
             if(produto != null)
             {
-                produtos.Sort(produto.Id);
                 return Ok(produto);
             }
             return NotFound();
