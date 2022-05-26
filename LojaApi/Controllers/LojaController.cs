@@ -25,18 +25,19 @@ namespace LojaApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperarProdutosPorID(double id)
+        public IActionResult RecuperarProdutosPorID(int id)
         {
             Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
             if(produto != null)
             {
+                produtos.Sort(produto.Id);
                 return Ok(produto);
             }
             return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeletarProdutosPorId(double id)
+        public IActionResult DeletarProdutosPorId(int id)
         {
             Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
             if(produto != null)
@@ -48,12 +49,13 @@ namespace LojaApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AlterarProdutosPorId([FromBody]Produto produto,double id)
+        public IActionResult AlterarProdutosPorId(int id)
         {
             Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
             if(produto != null)
             {
-                 produtos.Insert(Convert.ToInt32(id), new Produto());
+                 produtos.Remove(produto);
+                 produtos.Insert(id, new Produto(){Nome = "Vela", Categoria = "Produtos Gerais", Preco = 12, Id = id});
                  return Ok();
             }
             return NotFound();
