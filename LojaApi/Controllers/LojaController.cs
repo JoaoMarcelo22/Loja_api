@@ -49,13 +49,16 @@ namespace LojaApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AlterarProdutosPorId(int id)
+        public IActionResult AlterarProdutosPorId(int id,[FromBody]Produto produtoNovo)
         {
             Produto produto = produtos.FirstOrDefault(produto => produto.Id == id);
             if(produto != null)
             {
                  produtos.Remove(produto);
-                 produtos.Insert(id, new Produto(){Nome = "Vela", Categoria = "Produtos Gerais", Preco = 12, Id = id});
+                 produto.Nome = produtoNovo.Nome;
+                 produto.Categoria = produtoNovo.Categoria;
+                 produto.Preco = produtoNovo.Preco;
+                 produtos.Insert(id,produto);
                  return Ok();
             }
             return NotFound();
