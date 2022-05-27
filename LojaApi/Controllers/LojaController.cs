@@ -43,7 +43,7 @@ namespace LojaApi.Controllers
             if(produto != null)
             {
                  produtos.Remove(produto);
-                 return Ok();
+                 return Ok(produto);
             }
             return NotFound();
         }
@@ -59,7 +59,7 @@ namespace LojaApi.Controllers
                  produto.Categoria = produtoNovo.Categoria;
                  produto.Preco = produtoNovo.Preco;
                  produtos.Insert(id,produto);
-                 return Ok();
+                 return Ok(produto);
             }
             return NotFound();
         }
